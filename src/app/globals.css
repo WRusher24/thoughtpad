@@ -1,0 +1,170 @@
+@import "tailwindcss";
+
+/* --------------------------------------------------------------------- */
+/* ThoughtPad — parchment notepad design system                           */
+/* --------------------------------------------------------------------- */
+
+@theme {
+  --color-paper: #faf9f6;
+  --color-cream: #f4f3ed;
+  --color-card: #fffefb;
+  --color-ink: #1a1a1a;
+  --color-ink-soft: #43413a;
+  --color-muted: #8b887c;
+  --color-line: #e8e6df;
+  --color-line-soft: #efede6;
+}
+
+:root {
+  --f-heading: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --f-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Font-style themes — toggled from Settings, stored per user. */
+[data-font="classic"] {
+  --f-heading: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --f-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+[data-font="classic"] .font-heading {
+  letter-spacing: -0.02em;
+}
+[data-font="playful"] {
+  --f-heading: var(--font-fraunces), Georgia, serif;
+  --f-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+[data-font="typewriter"] {
+  --f-heading: var(--font-courier), "Courier New", monospace;
+  --f-body: var(--font-courier), "Courier New", monospace;
+}
+[data-font="typewriter"] .font-heading {
+  letter-spacing: -0.03em;
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+  scrollbar-width: thin;
+  scrollbar-color: #d8d5cb transparent;
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  text-rendering: optimizeLegibility;
+  overscroll-behavior-y: none;
+}
+
+.font-heading {
+  font-family: var(--f-heading);
+}
+.font-body {
+  font-family: var(--f-body);
+}
+
+::selection {
+  background: #1a1a1a;
+  color: #faf9f6;
+}
+
+/* Thin parchment scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #d8d5cb;
+  border-radius: 99px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Subtle paper-grain overlay (SVG fractal noise, ultra low opacity). */
+.paper-grain {
+  position: relative;
+}
+.paper-grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Lined-paper backdrop for the composer textarea. */
+.ruled-input {
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 31px,
+    #eceade 31px,
+    #eceade 32px
+  );
+  background-attachment: local;
+  line-height: 32px;
+}
+
+/* Ink-underline inputs used across forms. */
+.input-ink {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 1.5px solid #d9d6cc;
+  padding: 10px 2px;
+  font-size: 15px;
+  color: #1a1a1a;
+  outline: none;
+  transition: border-color 160ms ease;
+  border-radius: 0;
+}
+.input-ink::placeholder {
+  color: #a8a497;
+}
+.input-ink:focus {
+  border-bottom-color: #1a1a1a;
+}
+
+/* iOS Safari: keep inputs from auto-zooming (>=16px font). */
+input,
+textarea,
+select {
+  font-size: 16px;
+}
+@media (min-width: 768px) {
+  input,
+  textarea,
+  select {
+    font-size: 15px;
+  }
+}
+
+/* Buttons — base ink look */
+.btn-ink {
+  background: #1a1a1a;
+  color: #faf9f6;
+  border-radius: 10px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition:
+    transform 120ms ease,
+    background 160ms ease,
+    opacity 160ms ease;
+}
+.btn-ink:hover {
+  background: #000;
+}
+.btn-ink:active {
+  transform: scale(0.965);
+}
+.btn-ink:disabled {
+  opacity: 0.45;
+}
+
+/* Autofill fix so WebKit doesn't paint yellow over the parchment. */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #1a1a1a;
+  -webkit-box-shadow: 0 0 0 1000px #faf9f6 inset;
+  transition: background-color 9999s ease-in-out 0s;
+}
